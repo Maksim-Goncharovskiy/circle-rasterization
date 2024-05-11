@@ -37,44 +37,60 @@ std::vector<cv::Point> BrezenhamCircle::GetArc(cv::Mat& img, double startDegrees
         // Второй октант
         if (startRadian <= atan2(point.y, point.x) && atan2(point.y, point.x) <= endRadian) {
             img.at<cv::Vec3b>(center.x + point.x, center.y + point.y)[0] = color[0];
+            img.at<cv::Vec3b>(center.x + point.x, center.y + point.y)[1] = color[1];
+            img.at<cv::Vec3b>(center.x + point.x, center.y + point.y)[2] = color[2];
         }
 
         //Третий октант
         if (startRadian <= atan2(point.y, -point.x) && atan2(point.y, -point.x) <= endRadian) {
             img.at<cv::Vec3b>(center.x - point.x, center.y + point.y)[0] = color[0];
+            img.at<cv::Vec3b>(center.x - point.x, center.y + point.y)[1] = color[1];
+            img.at<cv::Vec3b>(center.x - point.x, center.y + point.y)[2] = color[2];
         }
 
         // Четвертый октант
         if (startRadian <= atan2(point.x, -point.y) && atan2(point.x, -point.y) <= endRadian) {
             img.at<cv::Vec3b>(center.x - point.y, center.y + point.x)[0] = color[0];
+            img.at<cv::Vec3b>(center.x - point.y, center.y + point.x)[1] = color[1];
+            img.at<cv::Vec3b>(center.x - point.y, center.y + point.x)[2] = color[2];
         }
 
         // Пятый октант
         if (startRadian <= (atan2(-point.x, -point.y) + 2 * CV_PI) && (atan2(-point.x, -point.y) + 2 * CV_PI) <= endRadian) {
             img.at<cv::Vec3b>(center.x - point.y, center.y - point.x)[0] = color[0];
+            img.at<cv::Vec3b>(center.x - point.y, center.y - point.x)[1] = color[1];
+            img.at<cv::Vec3b>(center.x - point.y, center.y - point.x)[2] = color[2];
         }
 
         // Шестой октант
         if (startRadian <= (atan2(-point.y, -point.x) + 2 * CV_PI) && (atan2(-point.y, -point.x) + 2 * CV_PI) <= endRadian) {
             img.at<cv::Vec3b>(center.x - point.x, center.y - point.y)[0] = color[0];
+            img.at<cv::Vec3b>(center.x - point.x, center.y - point.y)[1] = color[1];
+            img.at<cv::Vec3b>(center.x - point.x, center.y - point.y)[2] = color[2];
         }
 
 
         // Седьмой октант 
         if (startRadian <= (atan2(-point.y, point.x) + 2 * CV_PI) && (atan2(-point.y, point.x) + 2 * CV_PI) <= endRadian) {
             img.at<cv::Vec3b>(center.x + point.x, center.y - point.y)[0] = color[0];
+            img.at<cv::Vec3b>(center.x + point.x, center.y - point.y)[1] = color[1];
+            img.at<cv::Vec3b>(center.x + point.x, center.y - point.y)[2] = color[2];
         }
 
 
         // Восьмой октант
         if (startRadian <= (atan2(-point.x, point.y) + 2 * CV_PI) && (atan2(-point.x, point.y) + 2 * CV_PI) <= endRadian) {
             img.at<cv::Vec3b>(center.x + point.y, center.y - point.x)[0] = color[0];
+            img.at<cv::Vec3b>(center.x + point.y, center.y - point.x)[1] = color[1];
+            img.at<cv::Vec3b>(center.x + point.y, center.y - point.x)[2] = color[2];
         }
 
 
         // Первый октант
         if (startRadian <= atan2(point.x, point.y) && atan2(point.x, point.y) <= endRadian) {
             img.at<cv::Vec3b>(center.x + point.y, center.y + point.x)[0] = color[0];
+            img.at<cv::Vec3b>(center.x + point.y, center.y + point.x)[1] = color[1];
+            img.at<cv::Vec3b>(center.x + point.y, center.y + point.x)[2] = color[2];
         }
     }
     cv::rotate(img, img, cv::ROTATE_90_COUNTERCLOCKWISE);
@@ -98,41 +114,48 @@ void BrezenhamCircle::Demo() {
     int y = radius;
     int d = 1 - radius;
     points.push_back(cv::Point(x, y));
-    int blue = 255;
-    int green = 0;
+
     while (y > x) {
-        img.at<cv::Vec3b>(center.x + x, center.y + y)[0] = blue;
-        img.at<cv::Vec3b>(center.x + x, center.y + y)[1] = green;
+        img.at<cv::Vec3b>(center.x + x, center.y + y)[0] = color[0];
+        img.at<cv::Vec3b>(center.x + x, center.y + y)[1] = color[1];
+        img.at<cv::Vec3b>(center.x + x, center.y + y)[2] = color[2];
 
-        img.at<cv::Vec3b>(center.x - x, center.y + y)[0] = blue;
-        img.at<cv::Vec3b>(center.x - x, center.y + y)[1] = green;
+        img.at<cv::Vec3b>(center.x - x, center.y + y)[0] = color[0];
+        img.at<cv::Vec3b>(center.x - x, center.y + y)[1] = color[1];
+        img.at<cv::Vec3b>(center.x - x, center.y + y)[2] = color[2];
 
-        img.at<cv::Vec3b>(center.x - y, center.y + x)[0] = blue;
-        img.at<cv::Vec3b>(center.x - y, center.y + x)[1] = green;
+        img.at<cv::Vec3b>(center.x - y, center.y + x)[0] = color[0];
+        img.at<cv::Vec3b>(center.x - y, center.y + x)[1] = color[1];
+        img.at<cv::Vec3b>(center.x - y, center.y + x)[2] = color[2];
 
-        img.at<cv::Vec3b>(center.x - y, center.y - x)[0] = blue;
-        img.at<cv::Vec3b>(center.x - y, center.y - x)[1] = green;
+        img.at<cv::Vec3b>(center.x - y, center.y - x)[0] = color[0];
+        img.at<cv::Vec3b>(center.x - y, center.y - x)[1] = color[1];
+        img.at<cv::Vec3b>(center.x - y, center.y - x)[2] = color[2];
 
-        img.at<cv::Vec3b>(center.x - x, center.y - y)[0] = blue;
-        img.at<cv::Vec3b>(center.x - x, center.y - y)[1] = green;
+        img.at<cv::Vec3b>(center.x - x, center.y - y)[0] = color[0];
+        img.at<cv::Vec3b>(center.x - x, center.y - y)[1] = color[1];
+        img.at<cv::Vec3b>(center.x - x, center.y - y)[2] = color[2];
 
-        img.at<cv::Vec3b>(center.x + x, center.y - y)[0] = blue;
-        img.at<cv::Vec3b>(center.x + x, center.y - y)[1] = green;
+        img.at<cv::Vec3b>(center.x + x, center.y - y)[0] = color[0];
+        img.at<cv::Vec3b>(center.x + x, center.y - y)[1] = color[1];
+        img.at<cv::Vec3b>(center.x + x, center.y - y)[2] = color[2];
 
-        img.at<cv::Vec3b>(center.x + y, center.y - x)[0] = blue;
-        img.at<cv::Vec3b>(center.x + y, center.y - x)[1] = green;
+        img.at<cv::Vec3b>(center.x + y, center.y - x)[0] = color[0];
+        img.at<cv::Vec3b>(center.x + y, center.y - x)[1] = color[1];
+        img.at<cv::Vec3b>(center.x + y, center.y - x)[2] = color[2];
 
-        img.at<cv::Vec3b>(center.x + y, center.y + x)[0] = blue;
-        img.at<cv::Vec3b>(center.x + y, center.y + x)[1] = green;
+        img.at<cv::Vec3b>(center.x + y, center.y + x)[0] = color[0];
+        img.at<cv::Vec3b>(center.x + y, center.y + x)[1] = color[1];
+        img.at<cv::Vec3b>(center.x + y, center.y + x)[2] = color[2];
 
-        circle(demoImg, cv::Point(center.x + x, center.y + y), 5, cv::Scalar(0, 255, 0), -1);
-        circle(demoImg, cv::Point(center.x - x, center.y + y), 5, cv::Scalar(0, 0, 255), -1);
-        circle(demoImg, cv::Point(center.x - y, center.y + x), 5, cv::Scalar(0, 0, 255), -1);
-        circle(demoImg, cv::Point(center.x - y, center.y - x), 5, cv::Scalar(0, 0, 255), -1);
-        circle(demoImg, cv::Point(center.x - x, center.y - y), 5, cv::Scalar(0, 0, 255), -1);
-        circle(demoImg, cv::Point(center.x + x, center.y - y), 5, cv::Scalar(0, 0, 255), -1);
-        circle(demoImg, cv::Point(center.x + y, center.y - x), 5, cv::Scalar(0, 0, 255), -1);
-        circle(demoImg, cv::Point(center.x + y, center.y + x), 5, cv::Scalar(0, 0, 255), -1);
+        cv::circle(demoImg, cv::Point(center.x + x, center.y + y), 5, cv::Scalar(0, 255, 0), -1);
+        cv::circle(demoImg, cv::Point(center.x - x, center.y + y), 5, cv::Scalar(0, 0, 255), -1);
+        cv::circle(demoImg, cv::Point(center.x - y, center.y + x), 5, cv::Scalar(0, 0, 255), -1);
+        cv::circle(demoImg, cv::Point(center.x - y, center.y - x), 5, cv::Scalar(0, 0, 255), -1);
+        cv::circle(demoImg, cv::Point(center.x - x, center.y - y), 5, cv::Scalar(0, 0, 255), -1);
+        cv::circle(demoImg, cv::Point(center.x + x, center.y - y), 5, cv::Scalar(0, 0, 255), -1);
+        cv::circle(demoImg, cv::Point(center.x + y, center.y - x), 5, cv::Scalar(0, 0, 255), -1);
+        cv::circle(demoImg, cv::Point(center.x + y, center.y + x), 5, cv::Scalar(0, 0, 255), -1);
         cv::flip(demoImg, demoImg, 0);
 
 
