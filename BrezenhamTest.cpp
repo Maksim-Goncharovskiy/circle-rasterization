@@ -11,7 +11,7 @@
 int main(int argc, char* argv[]) {
 	std::ifstream json_read;
 	if (argc == 1) {
-		json_read.open(R"(..\..\..\tests\test1.json)");
+		json_read.open(R"(..\tests\test1.json)");
 	}
 	else if (argc > 1) {
 		json_read.open(argv[1]);
