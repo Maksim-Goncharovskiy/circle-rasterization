@@ -4,7 +4,7 @@
 #include <opencv2/opencv.hpp>
 #include <vector>
 
-BrezenhamCircle::BrezenhamCircle(cv::Point& center, int radius, cv::Scalar& color) {
+BrezenhamCircle::BrezenhamCircle(cv::Point center, int radius, cv::Scalar color) {
     this->center = center;
     this->radius = radius;
     this->color = color;
