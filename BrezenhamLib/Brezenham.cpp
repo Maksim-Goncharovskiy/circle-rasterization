@@ -12,6 +12,7 @@ BrezenhamCircle::BrezenhamCircle(cv::Point& center, int radius, cv::Scalar& colo
 
 std::vector<cv::Point> BrezenhamCircle::GetArc(cv::Mat& img, double startDegrees, double endDegrees, bool showDemo) {
     std::vector<cv::Point> points;
+    std::vector<cv::Point> arc_pixels;
     int x = 0;
     int y = radius;
     int d = 1 - radius;
@@ -39,6 +40,7 @@ std::vector<cv::Point> BrezenhamCircle::GetArc(cv::Mat& img, double startDegrees
             img.at<cv::Vec3b>(center.x + point.x, center.y + point.y)[0] = color[0];
             img.at<cv::Vec3b>(center.x + point.x, center.y + point.y)[1] = color[1];
             img.at<cv::Vec3b>(center.x + point.x, center.y + point.y)[2] = color[2];
+            arc_pixels.push_back(cv::Point(center.x + point.x, center.y + point.y));
         }
 
         //Третий октант
@@ -46,6 +48,7 @@ std::vector<cv::Point> BrezenhamCircle::GetArc(cv::Mat& img, double startDegrees
             img.at<cv::Vec3b>(center.x - point.x, center.y + point.y)[0] = color[0];
             img.at<cv::Vec3b>(center.x - point.x, center.y + point.y)[1] = color[1];
             img.at<cv::Vec3b>(center.x - point.x, center.y + point.y)[2] = color[2];
+            arc_pixels.push_back(cv::Point(center.x - point.x, center.y + point.y));
         }
 
         // Четвертый октант
@@ -53,6 +56,7 @@ std::vector<cv::Point> BrezenhamCircle::GetArc(cv::Mat& img, double startDegrees
             img.at<cv::Vec3b>(center.x - point.y, center.y + point.x)[0] = color[0];
             img.at<cv::Vec3b>(center.x - point.y, center.y + point.x)[1] = color[1];
             img.at<cv::Vec3b>(center.x - point.y, center.y + point.x)[2] = color[2];
+            arc_pixels.push_back(cv::Point(center.x - point.y, center.y + point.x));
         }
 
         // Пятый октант
@@ -60,6 +64,7 @@ std::vector<cv::Point> BrezenhamCircle::GetArc(cv::Mat& img, double startDegrees
             img.at<cv::Vec3b>(center.x - point.y, center.y - point.x)[0] = color[0];
             img.at<cv::Vec3b>(center.x - point.y, center.y - point.x)[1] = color[1];
             img.at<cv::Vec3b>(center.x - point.y, center.y - point.x)[2] = color[2];
+            arc_pixels.push_back(cv::Point(center.x - point.y, center.y - point.x));
         }
 
         // Шестой октант
@@ -67,6 +72,7 @@ std::vector<cv::Point> BrezenhamCircle::GetArc(cv::Mat& img, double startDegrees
             img.at<cv::Vec3b>(center.x - point.x, center.y - point.y)[0] = color[0];
             img.at<cv::Vec3b>(center.x - point.x, center.y - point.y)[1] = color[1];
             img.at<cv::Vec3b>(center.x - point.x, center.y - point.y)[2] = color[2];
+            arc_pixels.push_back(cv::Point(center.x - point.x, center.y - point.y));
         }
 
 
@@ -75,6 +81,7 @@ std::vector<cv::Point> BrezenhamCircle::GetArc(cv::Mat& img, double startDegrees
             img.at<cv::Vec3b>(center.x + point.x, center.y - point.y)[0] = color[0];
             img.at<cv::Vec3b>(center.x + point.x, center.y - point.y)[1] = color[1];
             img.at<cv::Vec3b>(center.x + point.x, center.y - point.y)[2] = color[2];
+            arc_pixels.push_back(cv::Point(center.x + point.x, center.y - point.y));
         }
 
 
@@ -83,6 +90,7 @@ std::vector<cv::Point> BrezenhamCircle::GetArc(cv::Mat& img, double startDegrees
             img.at<cv::Vec3b>(center.x + point.y, center.y - point.x)[0] = color[0];
             img.at<cv::Vec3b>(center.x + point.y, center.y - point.x)[1] = color[1];
             img.at<cv::Vec3b>(center.x + point.y, center.y - point.x)[2] = color[2];
+            arc_pixels.push_back(cv::Point(center.x + point.y, center.y - point.x));
         }
 
 
@@ -91,19 +99,22 @@ std::vector<cv::Point> BrezenhamCircle::GetArc(cv::Mat& img, double startDegrees
             img.at<cv::Vec3b>(center.x + point.y, center.y + point.x)[0] = color[0];
             img.at<cv::Vec3b>(center.x + point.y, center.y + point.x)[1] = color[1];
             img.at<cv::Vec3b>(center.x + point.y, center.y + point.x)[2] = color[2];
+            arc_pixels.push_back(cv::Point(center.x + point.y, center.y + point.x));
         }
     }
-    cv::rotate(img, img, cv::ROTATE_90_COUNTERCLOCKWISE);
-    imshow("Bresenham Circle", img);
+    cv::Mat copy;
+    cv::rotate(img, copy, cv::ROTATE_90_COUNTERCLOCKWISE);
+    imshow("Bresenham Circle", copy);
     if (showDemo) {
         Demo();
     }
     cv::waitKey();
-    return points;
+    return arc_pixels;
 }
 
 void BrezenhamCircle::Demo() {
     cv::Mat img(500, 500, CV_8UC3, cv::Scalar(0, 0, 0));
+    cv::Point center(250, 250);
     cv::line(img, cv::Point(0, 250), cv::Point(500, 250), cv::Scalar(50, 50, 50), 1, 1);
     cv::line(img, cv::Point(250, 0), cv::Point(250, 500), cv::Scalar(50, 50, 50), 1, 1);
     cv::line(img, cv::Point(0, 0), cv::Point(500, 500), cv::Scalar(50, 50, 50), 1, 1);
@@ -173,7 +184,7 @@ void BrezenhamCircle::Demo() {
         cv::waitKey(50);
         demoImg = img.clone();
     }
-    cv::imshow("Demo", img);
+    cv::imshow("Demo", demoImg);
     cv::waitKey(0);
 }
 
